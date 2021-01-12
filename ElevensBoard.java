@@ -52,7 +52,7 @@ public class ElevensBoard extends Board {
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
         // YOUR CODE HERE
-        return false;
+        return containsPairSum11(selectedCards) || containsJQK(selectedCards);
     }
 
     /**
@@ -70,7 +70,7 @@ public class ElevensBoard extends Board {
         List<Integer> selectedCards = cardIndexes();
 
         // YOUR CODE HERE
-        return true;
+				return containsPairSum11(selectedCards) || containsJQK(selectedCards);
     }
 
     /**
@@ -83,6 +83,11 @@ public class ElevensBoard extends Board {
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
         // YOUR CODE HERE
+				for (int i = 0; i<selectedCards.size(); i++) {
+					for (int j = 0; j<selectedCards.size(); j++) {
+						if (cardAt(selectedCards.get(i)).getPointValue() + cardAt(selectedCards.get(j)).getPointValue() == 11) return true;
+					}
+				}
         return false;
     }
 
@@ -96,6 +101,12 @@ public class ElevensBoard extends Board {
      */
     private boolean containsJQK(List<Integer> selectedCards) {
         // YOUR CODE HERE
-        return false;
+				boolean[] JQK = new boolean[3];
+				for (int i = 0; i<selectedCards.size(); i++) {
+					if (cardAt(selectedCards.get(i)).getRank().equals("jack")) JQK[0] = true;
+					else if (cardAt(selectedCards.get(i)).getRank().equals("queen")) JQK[1] = true;
+					else if (cardAt(selectedCards.get(i)).getRank().equals("king")) JQK[2] = true;
+				}
+        return JQK[0] &&  JQK[1] && JQK[2];
     }
 }
